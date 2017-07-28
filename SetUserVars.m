@@ -51,7 +51,7 @@ if mod(length(varargin),2)~=0,
     error('Number of arguments is odd: arguments must be passed in pairs (''ArgName'',ArgVal).'); 
 end
 
-EvalStr = [];
+EvalStr = [""];
 NumSetVars = 0;
 for ii=1:size(VarList,1),
    tmp = find(strcmp(varargin,VarList{ii,1}));		% Find argument index in varargin cell vector.

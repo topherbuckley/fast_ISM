@@ -87,7 +87,8 @@ function [out,OKflag] = ISM_AbsCoeff(rttype,rt,room,weight,method,varargin)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 VarList = {'c'          343};	 % default sound propagation speed
-eval(SetUserVars(VarList,varargin));
+%eval(SetUserVars(VarList,varargin));
+SetUserVars(VarList,varargin);
 
 if ~strcmpi(rttype,'t60') && ~strcmpi(rttype,'t20'),
     error('Unrecognised ''RT_TYPE'' parameter (must be either ''T60'' or ''T20'').');
@@ -127,7 +128,7 @@ elseif strcmpi(method,'lehmannjohansson'),
     if strcmpi(rttype,'t20'),
         out = fminbnd(@lehmann_johansson_20, 0.0001, 0.9999, [], rt, room, weight, c);
     else
-        out = fminbnd(@lehmann_johansson_60, 0.0001, 0.9999, [], rt, room, weight, c);
+        out = fminbnd(@(a) lehmann_johansson_60(a, rt, room, weight, c), 0.0001, 0.9999);%, [], rt, room, weight, c);
     end
 else
     error('Unrecognised ''METHOD'' parameter (see help for a list of accepted methods).');
